@@ -1,4 +1,3 @@
-
 name: Build OpenBeken BK7238
 
 on:
@@ -11,14 +10,14 @@ jobs:
 
     steps:
       - name: Checkout source
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
 
       - name: Build OpenBK7238
         run: |
           make APP_VERSION=bmpi2c-test APP_NAME=OpenBK7238 VARIANT=default OpenBK7238
 
       - name: Upload firmware
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v4
         with:
           name: OpenBK7238-BMPI2C-firmware
           path: output/**
