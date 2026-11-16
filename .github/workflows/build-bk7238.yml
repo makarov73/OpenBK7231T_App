@@ -23,7 +23,7 @@ jobs:
           make APP_VERSION=custom-bmpi2c APP_NAME=OpenBK7238 VARIANT=default OpenBK7238
 
       - name: Upload firmware
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: OpenBK7238-firmware
           path: output/**
