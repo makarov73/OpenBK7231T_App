@@ -1,24 +1,30 @@
 name: Build OpenBeken BK7238
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: # Запуск только вручную (чтобы не тратить минуты при каждом коммите)
+  push:
+    paths:
+      - 'src/**'           # Запускать, если меняли исходный код
+      - 'include/**'       # Запускать, если меняли заголовки
+      - 'obk_config.h'     # Запускать, если меняли конфиг драйверов
+      - '.github/workflows/build_bk7238_manual.yml' # Если меняли этот файл
 
 jobs:
-  build:
-    name: Build BK7238 with BMPI2C
+  build_bk7238:
+    name: Build BK7238 (default)
     runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
 
-      - name: Build OpenBK7238
+      - name: Run make
         run: |
-          make APP_VERSION=bmpi2c-test APP_NAME=OpenBK7238 VARIANT=default OpenBK7238
+          make APP_VERSION=custom-bmpi2c APP_NAME=OpenBK7238 VARIANT=default OpenBK7238
 
       - name: Upload firmware
         uses: actions/upload-artifact@v4
         with:
-          name: OpenBK7238-BMPI2C-firmware
+          name: OpenBK7238-firmware
           path: output/**
           if-no-files-found: error
