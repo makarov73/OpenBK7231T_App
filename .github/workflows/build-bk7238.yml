@@ -1,0 +1,25 @@
+
+name: Build OpenBeken BK7238
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build BK7238 with BMPI2C
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v5
+
+      - name: Build OpenBK7238
+        run: |
+          make APP_VERSION=bmpi2c-test APP_NAME=OpenBK7238 VARIANT=default OpenBK7238
+
+      - name: Upload firmware
+        uses: actions/upload-artifact@v6
+        with:
+          name: OpenBK7238-BMPI2C-firmware
+          path: output/**
+          if-no-files-found: error
